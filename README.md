@@ -78,7 +78,16 @@ Where:
 This indicates strong acoustic similarity between the two genres.
 
 ---
+## 📎 Kaggle Notebook Links
 
+You can view the implementation and execution results on Kaggle:
+
+- [T2](https://www.kaggle.com/code/twisterteja/task-2-final)
+- [T3](https://www.kaggle.com/code/twisterteja/task-3-final)
+- [T4](https://www.kaggle.com/code/twisterteja/task-4-final)
+- [T5](https://www.kaggle.com/code/twisterteja/task-5-final)
+
+---
 ## 🛠 Technologies Used
 
 - Python  
@@ -97,3 +106,4 @@ This indicates strong acoustic similarity between the two genres.
 This project demonstrates how preprocessing, feature extraction, dimensionality reduction, visualization, and similarity measures can be systematically applied to real-world audio datasets.
 
 The complete pipeline ensures robust data preparation and meaningful similarity computation across music genres.
+
