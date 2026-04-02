@@ -179,9 +179,9 @@ Z = (X - μ) / σ
 
 ## 📂 Submitted Files
 
-* `CODE_4.zip` → Python code / notebook  
-* `Eval_4.pdf` → Evaluation report  
-* `README.pdf` → Project details  
+* `Code_4.py` → Python code / notebook  
+* `Eval_Rport.pdf` → Evaluation report  
+* `README.md` → Project details ( this file )  
 
 ---
 
