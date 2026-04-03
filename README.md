@@ -1,109 +1,198 @@
 # 🎵 Music Genre Classification – Data Mining Project
 
+---
+
 ## 📌 Project Overview
 
-This project analyzes and compares music tracks using fundamental data mining techniques. The objective is to preprocess structured audio features, perform feature extraction, visualize feature distributions, and compute similarity between songs.
+This project focuses on applying data mining and machine learning techniques for **music genre classification** using the GTZAN dataset.
 
-The project was implemented using Python and standard data mining libraries as part of an academic Data Mining assignment.
+The work is divided into two phases:
+
+- **Phase 1 (Assignment 1):**
+  - Data preprocessing  
+  - Feature extraction  
+  - Visualization  
+  - Similarity analysis  
+
+- **Phase 2 (Assignment 2):**
+  - Feature engineering  
+  - Model building  
+  - Hyperparameter tuning  
+  - Performance evaluation  
+
+The complete pipeline demonstrates how raw audio features can be transformed into meaningful insights and accurate classification models.
 
 ---
 
 ## 📊 Dataset
 
-- **Dataset Used:** GTZAN Music Genre Dataset  
+- **Dataset:** GTZAN Music Genre Dataset  
 - **Source:** Kaggle  
 - **Total Tracks:** 1000  
-- **Genres:** 10 (Blues, Classical, Country, Disco, Hiphop, Jazz, Metal, Pop, Reggae, Rock)  
-- **Numerical Features:** 57 audio features per track  
-- Each track is 30 seconds long and represented as structured numerical feature vectors.
+- **Genres:** 10  
+  *(Blues, Classical, Country, Disco, Hip-Hop, Jazz, Metal, Pop, Reggae, Rock)*  
+- **Features:** 57 numerical audio features per track  
+- **Duration:** 30 seconds per track  
+
+Each track is represented as a structured numerical feature vector.
 
 ---
 
-## ⚙️ Techniques Applied
+## Phase 1 – Data Mining Tasks
 
 ### 1️⃣ Data Preprocessing
-
 - Checked for missing and duplicate values  
-- Removed non-informative columns (`filename`, `length`, `label`)  
-- Applied **Z-Score Standardization**
+- Removed non-informative columns (`filename`, `length`)  
+- Applied **Z-score standardization**:
 
 Z = (X - μ) / σ
 
-Where:  
-- X = original feature value  
-- μ = mean of the feature  
-- σ = standard deviation  
-
-- Applied **Principal Component Analysis (PCA)**  
-  - Reduced 57 features to 23 components  
-  - Retained over 90% of total variance  
+* Ensured all features contribute equally  
 
 ---
 
 ### 2️⃣ Feature Extraction
 
-- Implemented **Spectral Contrast** extraction using `librosa`  
-- Extracted 7 frequency band contrast features  
-- Computed mean and variance to create fixed-length feature vectors  
-- Demonstrated feature extraction on raw audio files  
+* Implemented **Spectral Contrast** using `librosa`  
+* Extracted 7 frequency band features  
+* Computed mean and variance → 14 new features  
 
 ---
 
 ### 3️⃣ Data Visualization
 
-- Used **Box Plot (Box-and-Whisker Plot)**  
-- Compared feature distributions before and after standardization  
-- Verified correction of scale imbalance visually  
+* Used **Box Plots**  
+* Compared distributions before and after scaling  
+* Verified correction of scale imbalance  
 
 ---
 
 ### 4️⃣ Similarity Analysis
 
-- Applied **Stratified Sampling** (1 song per genre → 10 songs total)  
-- Used **Cosine Similarity** on standardized features  
-- Computed a 10 × 10 pairwise similarity matrix  
-- Identified the pair with maximum similarity  
+* Used **Stratified Sampling** (1 sample per genre)  
+* Applied **Cosine Similarity**  
+* Generated a 10 × 10 similarity matrix  
+
+#### 🔎 Key Insight:
+
+* Most similar pair: **Blues & Rock**  
+* Similarity score ≈ **0.81**  
 
 ---
 
-## 🔎 Key Results
+## 🤖 Phase 2 – Classification & Evaluation
 
-- PCA reduced dimensionality from **57 → 23 features** while retaining **90.32% variance**  
-- Standardization successfully corrected scale imbalance  
-- Most similar pair identified:
+### 1️⃣ Preprocessing
 
-  **Blues & Rock**  
-  Cosine Similarity Score ≈ **0.812**
-
-This indicates strong acoustic similarity between the two genres.
+* Standardization using `StandardScaler`  
+* Label encoding of target variable  
+* Train-test split (80% – 20%, stratified)  
 
 ---
+
+### 2️⃣ Feature Extraction Methods
+
+#### 🔹 PCA (Principal Component Analysis)
+
+* Reduced 57 features → **~23 components**  
+* Retained **~90% variance**  
+
+#### 🔹 SelectKBest (ANOVA F-test)
+
+* Selected top **k features (10–40)**  
+* Best k determined using GridSearch  
+
+---
+
+### 3️⃣ Classification Models
+
+* Decision Tree  
+* K-Nearest Neighbors (KNN)  
+* Naive Bayes  
+
+---
+
+### 4️⃣ Hyperparameter Tuning
+
+* Used **GridSearchCV**  
+* 5-fold **Stratified Cross-Validation**  
+
+---
+
+## 📊 Results Summary
+
+| Feature Method | Model         | Test Accuracy    |
+|----------------|--------------|------------------|
+| PCA            | KNN          | 70.5%            |
+| SelectKBest    | KNN          | **71.0% (BEST)** |
+| PCA            | Naive Bayes  | 56.0%            |
+| SelectKBest    | Naive Bayes  | 56.5%            |
+| PCA            | Decision Tree| 50.0%            |
+| SelectKBest    | Decision Tree| 52.5%            |
+
+---
+
+## 🏆 Best Model
+
+* **Model:** K-Nearest Neighbors (KNN)  
+* **Feature Method:** SelectKBest  
+* **Accuracy:** **71.0%**  
+
+### 🔧 Best Parameters:
+
+* `n_neighbors = 5`  
+* `metric = manhattan`  
+* `weights = distance`  
+
+---
+
+## 📈 Key Insights
+
+* KNN performs best due to **distance-based similarity learning**  
+* SelectKBest slightly outperforms PCA  
+* PCA reduces dimensionality but may lose some discriminative detail  
+* Decision Trees perform poorly on continuous audio data  
+* Naive Bayes is fast but limited by independence assumptions  
+
+---
+
 ## 📎 Kaggle Notebook Links
 
-You can view the implementation and execution results on Kaggle:
-
-- [T2](https://www.kaggle.com/code/twisterteja/task-2-final)
-- [T3](https://www.kaggle.com/code/twisterteja/task-3-final)
-- [T4](https://www.kaggle.com/code/twisterteja/task-4-final)
-- [T5](https://www.kaggle.com/code/twisterteja/task-5-final)
+*  [Task 2 (Preprocessing) ](https://www.kaggle.com/code/twisterteja/task-2-final)
+*  [Task 3 (Feature Extraction)](https://www.kaggle.com/code/twisterteja/task-3-final) 
+*  [Task 4 (Visualization)](https://www.kaggle.com/code/twisterteja/task-4-final)  
+*  [Task 5 (Similarity)](https://www.kaggle.com/code/twisterteja/task-5-final) 
+*  [Assignment 2 (Final Classification Notebook) ](https://www.kaggle.com/code/twisterteja/dm-assignment2-teja)
 
 ---
+
 ## 🛠 Technologies Used
 
-- Python  
-- Pandas  
-- NumPy  
-- Scikit-learn  
-- Librosa  
-- Matplotlib  
+* Python  
+* Pandas  
+* NumPy  
+* Scikit-learn  
+* Librosa  
+* Matplotlib  
 
 ---
+
+## 📂 Submitted Files
+
+* `CODE_4.zip` → Python code / notebook  
+* `Eval_4.pdf` → Evaluation report  
+* `README.pdf` → Project details  
 
 ---
 
 ## 🚀 Conclusion
 
-This project demonstrates how preprocessing, feature extraction, dimensionality reduction, visualization, and similarity measures can be systematically applied to real-world audio datasets.
+This project demonstrates a complete data mining pipeline from preprocessing to model evaluation. The results show that **KNN combined with SelectKBest feature selection** is the most effective approach for music genre classification on the GTZAN dataset.
 
-The complete pipeline ensures robust data preparation and meaningful similarity computation across music genres.
+The study highlights the importance of:
 
+* Feature engineering  
+* Model selection  
+* Hyperparameter tuning  
+
+---
